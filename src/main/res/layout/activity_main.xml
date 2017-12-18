@@ -1,0 +1,281 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+        
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AIUI Product demo"
+            android:textSize="30sp"
+            android:gravity="center"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="0dp"
+    	android:layout_weight="1.5"
+    	android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+    	android:orientation="vertical">
+    	
+        <EditText
+	        android:id="@+id/edit_result"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:gravity="top|left"
+	        android:text="Hello, AIUI!" />
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="0dp"
+    	android:layout_weight="6"
+    	android:orientation="vertical">
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            
+            <LinearLayout 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+            
+                <TextView
+                    style="@style/ButtonFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="状态:" />
+                
+                <TextView
+                    style="@style/ButtonFont"
+                    android:id="@+id/txt_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff0000"
+                    android:text="未唤醒" />
+                
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+            
+	            <TextView
+	                style="@style/ButtonFont"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="音量:" />
+	            
+	            <TextView
+	                style="@style/ButtonFont"
+	                android:id="@+id/txt_vol"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="#00ff00"
+	                android:textStyle="bold"
+	                android:text="0" />
+	            
+	        </LinearLayout>
+	        
+            <LinearLayout 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+            
+	            <TextView
+	                style="@style/ButtonFont"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="原始音频:" />
+	            
+	            <TextView
+	                style="@style/ButtonFont"
+	                android:id="@+id/txt_saveStatus"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="#00ff00"
+	                android:text="未保存" />
+	            
+	        </LinearLayout>
+	        
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_create" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="创建Agent"/>
+            
+            <Button 
+                style="@style/ButtonFont"
+                android:id="@+id/btn_destroy" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="销毁Agent"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_start" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="开始AIUI"/>
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_reset" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="重置AIUI"/>
+            
+            <Button 
+                style="@style/ButtonFont"
+                android:id="@+id/btn_stop" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="停止AIUI"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_resetWakeup" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="重置唤醒"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_play" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="播放"/>
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_pause" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="暂停"/>
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_pre" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="上一曲"/>
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_next" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="下一曲"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_volPlus" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="音量+"/>
+            
+            <Button
+                style="@style/ButtonFont"
+                android:id="@+id/btn_volMinus" 
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="音量-"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	
+	        <Button
+	            style="@style/ButtonFont"
+	            android:id="@+id/btn_startSave"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="保存阵列音频" />
+	
+	        <Button
+	            style="@style/ButtonFont"
+	             android:id="@+id/btn_stopSave"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="停止保存" />
+        
+    	</LinearLayout>
+        
+    </LinearLayout>
+
+</LinearLayout>
