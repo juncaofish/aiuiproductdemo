@@ -60,6 +60,12 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
 			XIAOAI_GREETING_SS,			// 啥事
 			XIAOAI_GREETING_WTZN 		// 我听着呢
 		};
+
+		private final static String[] RECOMMEND_TRIPS = {
+			"上海天气好冷啊，我们去南半球过冬吧。十二月二十三日开始黄金海岸就有比基尼圣诞节活动哟，我们要去看看吗？",
+			"本周末上海气温两度，三亚二十度，带本宝宝去三亚过周末吧。有往返总价1730的机票哟，主人你心动了吗？",
+			"主人主人，我想吃火锅，宝宝刚刚欢快的看了下，这周末去重庆特别便宜，最低往返996元，主人我们要去重新的火锅里浪一浪吗？"
+		};
 		
 //		private final static String[] WAKE_UP_TONES_TTS = {
 //			"我在呢",
@@ -191,7 +197,14 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
 			{
 				DebugLog.LogD(TAG, "EVENT_BIND_SUCESS");
 
-				mPlayController.playTone("", START_SUCCESS);
+				mPlayController.playTone("", START_SUCCESS, new Runnable() {
+					@Override
+					public void run() {
+						mPlayController.playText("", "大家好，我是小游，我能帮您预订酒店，播报热门旅行线路。" +
+								"我还会唱歌，讲笑话，念古诗。叫醒我请说：小游小游。" );
+					}
+				});
+//				mPlayController.justTTS("", RECOMMEND_TRIPS[new Random().nextInt(RECOMMEND_TRIPS.length)]);
 					            
 				// 关闭唤醒方向指示灯
 	            DevBoardControlUtil.sleepLight();
@@ -211,7 +224,6 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
 			case AIUIConstant.EVENT_SLEEP: 
 			{
 				DebugLog.LogD(TAG, "EVENT_SLEEP");
-				
 				mCurrentState = AIUIConstant.STATE_READY;
 				if(mSleepErrorCode != 0){
 				    
@@ -287,7 +299,7 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
 			
 			case AIUIConstant.EVENT_PRE_SLEEP: {
 			    if (!(mPlayController.isCurrentPlayMusic() || mPlayController.isCurrentTTS())){
-			        justSayGoodbye("");
+					justSayGoodbye("");
 			    }
 			}break;
 			
@@ -525,19 +537,20 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
 						String cnt_id = content.getString("cnt_id");
 						JSONObject cntJson = new JSONObject(new String(event.data.getByteArray(cnt_id), "utf-8"));
 						String sub = params.optString("sub");
+						long posRsltParseFinish = System.currentTimeMillis();
 						
 						//后处理结果
 						if("tpp".equals(sub)) {
-
-						}else {
 							JSONObject result = cntJson.getJSONObject("intent");
-							long posRsltParseFinish = System.currentTimeMillis();
-							
+							mSemanticHandler.handleResult(result, event.data, params.toString(), posRsltOnArrival, posRsltParseFinish);
+							DebugLog.LogD(TAG, result.optString("text"));
+						}else {
 							if ("nlp".equals(sub)) {
 								//在线语义结果
-								mSemanticHandler.handleResult(result, event.data, params.toString(), posRsltOnArrival, posRsltParseFinish);	
+//								mSemanticHandler.handleResult(result, event.data, params.toString(), posRsltOnArrival, posRsltParseFinish);
 							} else if ("asr".equals(sub)) {
 								// 处理离线语法结果
+								JSONObject result = cntJson.getJSONObject("intent");
 								mAsrHandler.handleResult(result);
 							}
 						}
@@ -554,12 +567,23 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
 
 		private void justLightOff(final String uuid) {
             DebugLog.LogD(TAG, "gotoSleep");
-            
             mPlayController.stopPlayControl();
+			mPlayController.justTTS("", RECOMMEND_TRIPS[new Random().nextInt(RECOMMEND_TRIPS.length)], false,
+					// 播放休眠提示音
+//            mPlayController.playTone(uuid, XIAOAI_GOODBYE_NWZL,
+					new Runnable() {
+
+						@Override
+						public void run() {
+							AppTimeLogger.onSleep(uuid);
+
+							DevBoardControlUtil.sleepLight();
+						}
+					});
         
             AppTimeLogger.onSleep(uuid);
             
-            DevBoardControlUtil.sleepLight();
+//            DevBoardControlUtil.sleepLight();
             
         }
 		
@@ -572,8 +596,7 @@ public class AIUIProcessor extends PlayControllerListenerAdapter implements AIUI
             DebugLog.LogD(TAG, "gotoSleep");
             
             mPlayController.stopPlayControl();
-        
-            // 播放休眠提示音
+
             mPlayController.playTone(uuid, XIAOAI_GOODBYE_NWZL, new Runnable() {
         
                 @Override

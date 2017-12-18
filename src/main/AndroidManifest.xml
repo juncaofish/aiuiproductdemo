@@ -42,6 +42,10 @@
                 <action android:name="com.iflytek.aiui.action.alarm.clock" />
             </intent-filter>
         </receiver>
+        <receiver android:name= "com.iflytek.aiuiproduct.receiver.AlarmReceiver">
+        </receiver>
+        <service android:name="com.iflytek.aiuiproduct.VoiceBroadcastService" >
+        </service>
 
         <service android:name="com.iflytek.aiuiproduct.ProductDemoService" >
             <intent-filter android:priority="1000" >

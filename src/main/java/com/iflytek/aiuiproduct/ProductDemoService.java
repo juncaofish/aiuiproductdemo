@@ -9,7 +9,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
+
 
 /**
  * 产品演示demo的主Service。
@@ -41,6 +41,8 @@ public class ProductDemoService extends Service{
 		mProcessor = new AIUIProcessor(this);
 		mAIUIAgent = AIUIAgent.createAgent(this, mProcessor);
         mProcessor.setAgent(mAIUIAgent);
+		Intent intent = new Intent(this, VoiceBroadcastService.class);
+		startService(intent);
 	}
 	
 	@Override
